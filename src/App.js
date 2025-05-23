@@ -5,6 +5,8 @@ import Dashboard from "./pages/Dashboard";
 import Project from "./components/core/Dashboard/Project/Project";
 import ProjectList from "./components/core/Dashboard/Project/ProjectList";
 import ProjectDetail from "./components/core/Dashboard/Project/ProjectDetail";
+import Profile from "./components/core/Dashboard/Profile/Profile";
+import Issues from "./components/core/Dashboard/Issues/Issues";
 
 const App = () => {
   return (
@@ -21,8 +23,8 @@ const App = () => {
 
           {/* Subroutes */}
           <Route path="projects" element={<ProjectList />} />
-          <Route path="issues" element={<Project />} />
-          <Route path="profile" element={<Project />} />
+          <Route path="issues" element={<Issues/>} />
+          <Route path="profile" element={<Profile/>} />
           <Route path="project/:id" element={<ProjectDetail />} />
         </Route>
       </Routes>
