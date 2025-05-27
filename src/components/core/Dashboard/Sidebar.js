@@ -28,9 +28,9 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Hamburger IconButton — visible only on mobile */}
+    
       <Box
-        className="fixed top-[64px] left-4 z-50 md:hidden" // assuming navbar height = 64px (you can adjust)
+        className="fixed top-[64px] left-4 z-50 md:hidden" 
       >
         <IconButton
           onClick={() => setIsOpen(true)}
