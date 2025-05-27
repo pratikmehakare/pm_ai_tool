@@ -40,7 +40,7 @@ const ProjectDetail = () => {
 
   return (
     <div className="p-6 max-w-5xl mx-auto bg-white shadow-md rounded-lg font-mono">
-      <Link to="/dashboard/projects" className="text-blue-600 mb-4 block">
+      <Link to="/dashboard/projects" className="text-[#2563eb] mb-4 block">
         ← Back to Project List
       </Link>
       <h2 className="text-2xl font-bold mb-6">{project.name} - Details</h2>

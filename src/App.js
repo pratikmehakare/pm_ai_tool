@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Navbar from "./components/common/Navbar";
 import Dashboard from "./pages/Dashboard";
-import Project from "./components/core/Dashboard/Project/Project";
 import ProjectList from "./components/core/Dashboard/Project/ProjectList";
 import ProjectDetail from "./components/core/Dashboard/Project/ProjectDetail";
 import Profile from "./components/core/Dashboard/Profile/Profile";
@@ -20,7 +19,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />}>
           {/* ✅ Default content when visiting /dashboard */}
           <Route index element={<ProjectList />} />
-
+     
           {/* Subroutes */}
           <Route path="projects" element={<ProjectList />} />
           <Route path="issues" element={<Issues/>} />
