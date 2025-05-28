@@ -12,7 +12,7 @@ const projects = [
 const ProjectList = () => {
   return (
     <div className="w-full max-w-4xl p-4">
-      <h2 className="text-3xl font-bold mb-8 text-left">Project List</h2>
+      <h2 className="text-3xl font-bold mb-8 text-left px-4">Project List</h2>
       <ul className="space-y-6">
         {projects.map(({ id, name, completion }) => (
           <li key={id} className="bg-white shadow-md rounded-lg p-6 hover:bg-gray-50 transition">

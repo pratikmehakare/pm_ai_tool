@@ -26,49 +26,53 @@ const Sidebar = () => {
       isActive ? 'bg-gray-600 text-white' : 'text-gray-700 hover:bg-gray-200'
     }`;
 
+  // 🧼 Reusable nav content
+  const renderNavLinks = () => (
+    <nav className="space-y-4">
+      {navLinkData.map(({ name, path }) => (
+        <NavLink
+          key={path}
+          to={path}
+          onClick={() => setIsOpen(false)} // Will only have effect in Drawer
+          className={() => linkClasses(getIsActive(path))}
+        >
+          {name}
+        </NavLink>
+      ))}
+    </nav>
+  );
+
   return (
     <>
-    
-      <Box
-        className="fixed top-[64px] left-4 z-50 md:hidden" 
-      >
+      {/* Mobile menu button */}
+      <Box className="fixed top-[70px] left-4 z-50 md:hidden">
         <IconButton
           onClick={() => setIsOpen(true)}
           color="inherit"
           aria-label="open sidebar"
+          sx={{ fontWeight: 'bold' }}
         >
-          <MenuIcon className='text-3xl text-gray-800'/>
+          <MenuIcon className="text-[2rem] text-gray-800 font-bol" />
         </IconButton>
       </Box>
 
-      {/* Sidebar for desktop */}
+      {/* Desktop sidebar */}
       <Box className="hidden md:block w-60 bg-gray-100 p-4 border-r min-h-screen font-mono">
-        <Typography variant="h6" className="mb-6 p-4"><DashboardIcon fontSize="small"/> Dashboard</Typography>
-        <nav className="space-y-4">
-          {navLinkData.map(({ name, path }) => (
-            <NavLink key={path} to={path} className={() => linkClasses(getIsActive(path))}>
-              {name}
-            </NavLink>
-          ))}
-        </nav>
+        <Typography variant="h6" className="mb-6 p-4 flex items-center gap-2">
+          <DashboardIcon fontSize="small" />
+          Dashboard
+        </Typography>
+        {renderNavLinks()}
       </Box>
 
-      {/* Drawer for mobile */}
+      {/* Mobile drawer */}
       <Drawer anchor="left" open={isOpen} onClose={() => setIsOpen(false)}>
         <Box width={240} role="presentation" p={2}>
-          <Typography variant="h6" className="mb-4 p-4"> <DashboardIcon fontSize="small"/> Dashboard</Typography>
-          <nav className="space-y-4">
-            {navLinkData.map(({ name, path }) => (
-              <NavLink
-                key={path}
-                to={path}
-                onClick={() => setIsOpen(false)}
-                className={() => linkClasses(getIsActive(path))}
-              >
-                {name}
-              </NavLink>
-            ))}
-          </nav>
+          <Typography variant="h6" className="mb-4 p-4 flex items-center gap-2">
+            <DashboardIcon fontSize="small" />
+            Dashboard
+          </Typography>
+          {renderNavLinks()}
         </Box>
       </Drawer>
     </>
