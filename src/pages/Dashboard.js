@@ -1,6 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from '../components/core/Dashboard/Sidebar'
+import ChatbotWidget from '../components/common/ChatbotWidget'
 
 const Dashboard = () => {
   return (
@@ -11,6 +12,7 @@ const Dashboard = () => {
           <Outlet/>
         </div>
       </div>
+      <ChatbotWidget/>
     </div>
   )
 }
