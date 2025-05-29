@@ -6,7 +6,6 @@ export default function ChatbotWidget() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 w-80">
-      {/* Chat Window */}
       {isOpen && (
         <div className="absolute bottom-14 right-2 bg-white border border-gray-300 rounded-2xl shadow-lg w-80 h-96 flex flex-col overflow-hidden animate-fadeIn">
           <div className="bg-gray-600 text-white px-4 py-2 font-semibold">
@@ -28,7 +27,6 @@ export default function ChatbotWidget() {
         </div>
       )}
 
-      {/* Chatbot Button */}
       <button
         className="absolute bottom-0 right-0 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-xl transition-all"
         onClick={() => setIsOpen(!isOpen)}
