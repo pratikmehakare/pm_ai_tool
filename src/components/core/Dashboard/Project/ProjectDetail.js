@@ -2,7 +2,7 @@ import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 // Example project data with team-level details
 const projects = [
   {
@@ -40,8 +40,8 @@ const ProjectDetail = () => {
 
   return (
     <div className="p-6 max-w-5xl mx-auto bg-white shadow-md rounded-lg font-mono">
-      <Link to="/dashboard/projects" className="text-blue-600 mb-4 block">
-        ← Back to Project List
+      <Link to="/dashboard/projects" className=" flex text-[#2563eb] mb-4 ">
+         <ArrowBackIcon fontSize="small"/> <h2> Project List</h2>
       </Link>
       <h2 className="text-2xl font-bold mb-6">{project.name} - Details</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

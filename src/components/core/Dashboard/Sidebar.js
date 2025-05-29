@@ -1,27 +1,22 @@
-import React from 'react';
+import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { Drawer, IconButton, Box, Typography } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 const navLinkData = [
-  {
-    name: 'Projects',
-    path: '/dashboard/projects',
-  },
-  {
-    name: 'Issues',
-    path: '/dashboard/issues',
-  },
-  {
-    name: 'Profile',
-    path: '/dashboard/profile',
-  },
+  { name: 'Projects', path: '/dashboard/projects' },
+  { name: 'Issues', path: '/dashboard/issues' },
+  { name: 'Profile', path: '/dashboard/profile' },
 ];
 
 const Sidebar = () => {
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
 
   const getIsActive = (path) => {
     if (location.pathname === '/dashboard' && path === '/dashboard/projects') {
-      return true; // Default highlight for /dashboard
+      return true;
     }
     return location.pathname === path;
   };
@@ -31,24 +26,56 @@ const Sidebar = () => {
       isActive ? 'bg-gray-600 text-white' : 'text-gray-700 hover:bg-gray-200'
     }`;
 
+  // 🧼 Reusable nav content
+  const renderNavLinks = () => (
+    <nav className="space-y-4">
+      {navLinkData.map(({ name, path }) => (
+        <NavLink
+          key={path}
+          to={path}
+          onClick={() => setIsOpen(false)} // Will only have effect in Drawer
+          className={() => linkClasses(getIsActive(path))}
+        >
+          {name}
+        </NavLink>
+      ))}
+    </nav>
+  );
+
   return (
-    <aside className="w-60 bg-gray-100 p-4 border-r min-h-full font-mono">
-      <h2 className="text-xl font-semibold mb-6">Dashboard</h2>
-      <nav className="space-y-2">
-        {navLinkData.map(({ name, path }) => {
-          const isActive = getIsActive(path);
-          return (
-            <NavLink
-              key={path}
-              to={path}
-              className={() => linkClasses(isActive)}
-            >
-              {name}
-            </NavLink>
-          );
-        })}
-      </nav>
-    </aside>
+    <>
+      {/* Mobile menu button */}
+      <Box className="fixed top-[70px] left-4 z-50 md:hidden">
+        <IconButton
+          onClick={() => setIsOpen(true)}
+          color="inherit"
+          aria-label="open sidebar"
+          sx={{ fontWeight: 'bold' }}
+        >
+          <MenuIcon className="text-[2rem] text-gray-800 font-bol" />
+        </IconButton>
+      </Box>
+
+      {/* Desktop sidebar */}
+      <Box className="hidden md:block w-60 bg-gray-100 p-4 border-r min-h-screen font-mono">
+        <Typography variant="h6" className="mb-6 p-4 flex items-center gap-2">
+          <DashboardIcon fontSize="small" />
+          Dashboard
+        </Typography>
+        {renderNavLinks()}
+      </Box>
+
+      {/* Mobile drawer */}
+      <Drawer anchor="left" open={isOpen} onClose={() => setIsOpen(false)}>
+        <Box width={240} role="presentation" p={2}>
+          <Typography variant="h6" className="mb-4 p-4 flex items-center gap-2">
+            <DashboardIcon fontSize="small" />
+            Dashboard
+          </Typography>
+          {renderNavLinks()}
+        </Box>
+      </Drawer>
+    </>
   );
 };
 

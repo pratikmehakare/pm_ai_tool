@@ -19,7 +19,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />}>
           {/* Default content when visiting /dashboard */}
           <Route index element={<ProjectList />} />
-
+     
           {/* Subroutes */}
           <Route path="projects" element={<ProjectList />} />
           <Route path="issues" element={<Issues/>} />
