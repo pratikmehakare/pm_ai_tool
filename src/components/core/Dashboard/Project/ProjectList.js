@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ProgressBar from "@ramonak/react-progress-bar";
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  LinearProgress,
+  Paper,
+} from "@mui/material";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -26,29 +34,82 @@ const ProjectList = () => {
         });
 
         setProjects(transformedProjects);
+      })
+      .catch((error) => {
+        console.error("Error fetching projects:", error);
+     
       });
   }, []);
 
   return (
-    <div className="w-full max-w-4xl p-4">
-      <h2 className="text-3xl font-bold mb-8 text-left px-4">Project List</h2>
-      <ul className="space-y-6">
+    <Box sx={{ width: "100%", maxWidth: 800, mx: "auto", p: 2 }}>
+      {/* mx: "auto" centers the Box */}
+      <Typography variant="h4" component="h2" gutterBottom align="left">
+        Project List
+      </Typography>
+      <List sx={{ pt: 0 }}> 
         {projects.map(({ id, name, completion }) => (
-          <li
+          <Paper
             key={id}
-            className="bg-white shadow-md rounded-lg p-6 hover:bg-gray-50 transition"
+            elevation={2}
+            sx={{
+              mb: 3, 
+              borderRadius: 2,
+              overflow: "hidden", 
+              transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+              "&:hover": {
+                transform: "translateY(-4px)",
+                boxShadow: 6,
+              },
+            }}
           >
-            <Link to={`/dashboard/project/${id}`} className="block">
-              <div className="flex justify-between mb-3">
-                <span className="text-lg font-medium text-gray-800">
-                  {name}
-                </span>
-              </div>
-            </Link>
-          </li>
+            <ListItem
+              component={Link} // Use ListItem as a Link
+              to={`/dashboard/project/${id}`}
+              sx={{
+                py: 2,
+                px: 3, 
+                textDecoration: "none", 
+                color: "inherit",
+                display: "block", 
+              }}
+            >
+              <ListItemText
+                primary={
+                  <Typography variant="h6" component="h3">
+                    {name}
+                  </Typography>
+                }
+                secondary={
+                  <Box sx={{ mt: 1 }}> 
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+                      Completion: {completion}%
+                    </Typography>
+                    <LinearProgress
+                      variant="determinate"
+                      value={completion}
+                      sx={{
+                        height: 8,
+                        borderRadius: 5, 
+                        "& .MuiLinearProgress-bar": {
+                          backgroundColor:
+                       "primary.main"
+                        },
+                      }}
+                    />
+                  </Box>
+                }
+              />
+            </ListItem>
+          </Paper>
         ))}
-      </ul>
-    </div>
+      </List>
+      {projects.length === 0 && (
+        <Typography variant="body1" color="text.secondary" align="center" sx={{ mt: 4 }}>
+          No projects found.
+        </Typography>
+      )}
+    </Box>
   );
 };
 

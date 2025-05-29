@@ -1,14 +1,22 @@
 import React from 'react';
 import {
   PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, Line, CartesianGrid,
-  XAxis, YAxis, 
+  XAxis, YAxis,
 } from 'recharts';
-import { ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
 
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import {
+  Box,
+  Typography,
+  Paper, 
+  useTheme, 
+} from '@mui/material';
+
+// Use theme colors for chart consistency
 const COLORS = [
   '#2563eb', 
-  '#10b981', 
   '#f59e0b', 
+  '#10b981',
   '#ef4444',
   '#a855f7', 
   '#06b6d4', 
@@ -19,7 +27,6 @@ const COLORS = [
 ];
 
 
-// Bar chart data: current counts by status
 const pieData = [
   { name: 'Open', value: 14 },
   { name: 'In Progress', value: 8 },
@@ -28,7 +35,7 @@ const pieData = [
   { name: 'Review', value: 4 },
 ];
 
-// Line chart data: historical trend
+
 const lineData = [
   { day: 'Mon', Open: 5, Closed: 2, 'In Progress': 3 },
   { day: 'Tue', Open: 8, Closed: 4, 'In Progress': 2 },
@@ -37,75 +44,87 @@ const lineData = [
   { day: 'Fri', Open: 14, Closed: 21, 'In Progress': 8 },
 ];
 
+
 const CustomTooltip = ({ active, payload }) => {
+  const theme = useTheme();
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white border shadow-md px-3 py-2 rounded text-sm">
+      <Paper elevation={3} sx={{ p: 1.5, borderRadius: 1, backgroundColor: 'rgba(255, 255, 255, 0.95)' }}>
         {payload.map((data, i) => (
-          <div key={i}>
-            <strong className="text-gray-700">{data.name || data.dataKey}</strong>: {data.value}
-          </div>
+          <Typography key={i} variant="body2" sx={{ color: theme.palette.text.primary }}>
+            <strong style={{ color: data.color || theme.palette.text.secondary }}>
+              {data.name || data.dataKey}
+            </strong>
+            : {data.value}
+          </Typography>
         ))}
-      </div>
+      </Paper>
     );
   }
   return null;
 };
 
 const IssueChart = () => {
+  const theme = useTheme(); // Access the theme object for consistent styling
+
   return (
-    <div className="w-full max-w-6xl mx-auto p-4 space-y-6">
-      <h2 className="text-3xl font-bold text-gray-800 mb-4">📊Issues</h2>
+    <Box sx={{ width: '100%', maxWidth: 1000, mx: 'auto', p: 2, pb: 4, mt: 2 }}>
+      <Typography variant="h4" component="h2" gutterBottom align="left" sx={{ mb: 4, color: theme.palette.text.primary, fontWeight: 'medium' }}>
+        📊 Issues Overview
+      </Typography>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Bar Chart */}
-      <div className="w-full max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Issue Status Overview</h2>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 4 }}>
+        {/* Pie Chart Card (Issue Status Overview) */}
+        <Paper elevation={4} sx={{ p: 4, borderRadius: 2 }}>
+          <Typography variant="h6" component="h3" gutterBottom sx={{ mb: 3, color: theme.palette.text.primary, fontWeight: 'medium' }}>
+            Issue Status Overview
+          </Typography>
+          <ResponsiveContainer width="100%" height={350}>
+            <PieChart>
+              <Pie
+                data={pieData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, percent }) =>
+                  `${name}: ${(percent * 100).toFixed(0)}%`
+                }
+                outerRadius={120}
+                dataKey="value"
+              >
+                {pieData.map((_entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip content={<CustomTooltip />} />
+              <Legend verticalAlign="bottom" height={36} />
+            </PieChart>
+          </ResponsiveContainer>
+        </Paper>
 
-      <ResponsiveContainer width="100%" height={350}>
-        <PieChart>
-          <Pie
-            data={pieData}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            label={({ name, percent }) =>
-              `${name}: ${(percent * 100).toFixed(0)}%`
-            }
-            outerRadius={120}
-            dataKey="value"
-          >
-            {pieData.map((_entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-          <Legend verticalAlign="bottom" height={36} />
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
-
-        {/* Line Chart */}
-        <div className="bg-white shadow-lg p-6 rounded-lg">
-          <div className="flex items-center mb-4">
-            <ArrowTrendingUpIcon className="w-6 h-6 text-green-500 mr-2" />
-            <h3 className="text-lg font-semibold text-gray-700">Issue Trend (Week)</h3>
-          </div>
+        {/* Line Chart Card (Issue Trend) */}
+        <Paper elevation={4} sx={{ p: 4, borderRadius: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+            <TrendingUpIcon sx={{ fontSize: '28px', color: theme.palette.success.main, mr: 1 }} />
+            <Typography variant="h6" component="h3" sx={{ color: theme.palette.text.primary, fontWeight: 'medium' }}>
+              Issue Trend (Week)
+            </Typography>
+          </Box>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={lineData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="day" />
-              <YAxis allowDecimals={false} />
+            <LineChart data={lineData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke={theme.palette.divider} /> {/* Use theme divider color */}
+              <XAxis dataKey="day" stroke={theme.palette.text.secondary} />
+              <YAxis allowDecimals={false} stroke={theme.palette.text.secondary} />
               <Tooltip content={<CustomTooltip />} />
               <Legend />
-              <Line type="monotone" dataKey="Open" stroke="#2563eb" strokeWidth={2} />
-              <Line type="monotone" dataKey="In Progress" stroke="#10b981" strokeWidth={2} />
-              <Line type="monotone" dataKey="Closed" stroke="#f59e0b" strokeWidth={2} />
+              <Line type="monotone" dataKey="Open" stroke={COLORS[0]} strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 8 }} />
+              <Line type="monotone" dataKey="In Progress" stroke={COLORS[2]} strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 8 }} />
+              <Line type="monotone" dataKey="Closed" stroke={COLORS[1]} strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 8 }} />
             </LineChart>
           </ResponsiveContainer>
-        </div>
-      </div>
-    </div>
+        </Paper>
+      </Box>
+    </Box>
   );
 };
 
