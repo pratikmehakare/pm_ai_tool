@@ -12,7 +12,7 @@ const Navbar = () => {
             alt="logo"
             className="h-10 w-10"
           />
-          <Link  className="hover:text-gray-300 transition">PM-AI</Link>
+          <Link  className="hover:text-gray-300 transition">PM-AI-TOOL</Link>
         </div>
 
         <div className="flex gap-x-2 items-center">

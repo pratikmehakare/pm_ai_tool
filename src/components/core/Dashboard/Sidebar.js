@@ -6,7 +6,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 
 const navLinkData = [
   { name: 'Projects', path: '/dashboard/projects' },
-  { name: 'Issues', path: '/dashboard/issues' },
+  // { name: 'Issues', path: '/dashboard/issues' },
   { name: 'Profile', path: '/dashboard/profile' },
 ];
 

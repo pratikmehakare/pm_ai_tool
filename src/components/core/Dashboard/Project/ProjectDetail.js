@@ -1,72 +1,95 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// Example project data with team-level details
-const projects = [
-  {
-    id: 1,
-    name: "Project Alpha",
-    teams: [
-      { team: "Frontend", role: "UI Developer", progress: 70, risk: "Low", delay: "2 days" },
-      { team: "Backend", role: "API Developer", progress: 45, risk: "Medium", delay: "5 days" },
-      { team: "QA", role: "Tester", progress: 90, risk: "Low", delay: "0 days" },
-      { team: "DevOps", role: "Engineer", progress: 30, risk: "High", delay: "7 days" },
-    ],
-  },
-  {
-    id: 2,
-    name: "Project Beta",
-    teams: [
-      { team: "Frontend", role: "UI Developer", progress: 50, risk: "Medium", delay: "1 day" },
-      { team: "Backend", role: "API Developer", progress: 60, risk: "Low", delay: "0 days" },
-    ],
-  },
-  // Add more projects as needed
-];
-
-const getColor = (value) => {
-  if (value >= 80) return "#22c55e"; // green
-  if (value >= 50) return "#eab308"; // yellow
-  return "#ef4444"; // red
-};
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const ProjectDetail = () => {
   const { id } = useParams();
-  const project = projects.find((p) => p.id === parseInt(id));
+  const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!project) return <div className="p-4 text-red-500">Project not found.</div>;
+  useEffect(() => {
+    fetch("/data.json")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch data");
+        return res.json();
+      })
+      .then((data) => {
+        // Find project by id (id is string in JSON, parseInt for safety)
+        const foundProject = data.find((p) => p.id === id || p.id === parseInt(id));
+        setProject(foundProject || null);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) return <div className="p-4">Loading...</div>;
+  if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
+  if (!project)
+    return <div className="p-4 text-red-500">Project not found.</div>;
 
   return (
     <div className="p-6 max-w-5xl mx-auto bg-white shadow-md rounded-lg font-mono">
-      <Link to="/dashboard/projects" className=" flex text-[#2563eb] mb-4 ">
-         <ArrowBackIcon fontSize="small"/> <h2> Project List</h2>
+      <Link to="/dashboard/projects" className="flex items-center text-[#2563eb] mb-4">
+        <ArrowBackIcon fontSize="small" />
+        <span className="ml-1">Project List</span>
       </Link>
-      <h2 className="text-2xl font-bold mb-6">{project.name} - Details</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {project.teams.map((item, index) => (
+
+      <h2 className="text-2xl font-bold mb-6">{project["Project Name"]}</h2>
+
+      <h3 className="text-xl font-semibold mb-4">Issues</h3>
+
+      <div className="space-y-6">
+        {project.Issues.map((issue) => (
           <div
-            key={index}
-            className="flex items-center gap-6 p-4 border rounded-lg shadow-sm bg-gray-50"
+            key={issue.id}
+            className="border rounded-lg p-4 shadow-sm bg-gray-50"
           >
-            <div className="w-20 h-20">
-              <CircularProgressbar
-                value={item.progress}
-                text={`${item.progress}%`}
-                styles={buildStyles({
-                  pathColor: getColor(item.progress),
-                  textColor: "#374151",
-                  trailColor: "#e5e7eb",
-                })}
-              />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold">{item.team}</h3>
-              <p className="text-sm text-gray-600">Role: {item.role}</p>
-              <p className="text-sm text-gray-600">Risk: {item.risk}</p>
-              <p className="text-sm text-gray-600">Delay: {item.delay}</p>
-            </div>
+            <h4 className="font-semibold text-lg mb-1">
+              {issue["Issue Key"]} - {issue.Summary}
+            </h4>
+            <p>
+              <strong>Type:</strong> {issue["Issue Type"]} |{" "}
+              <strong>Status:</strong> {issue.Status} |{" "}
+              <strong>Priority:</strong> {issue.Priority}
+            </p>
+            <p>
+              <strong>Assignee:</strong> {issue.Assignee} |{" "}
+              <strong>Reporter:</strong> {issue.Reporter}
+            </p>
+            <p>
+              <strong>Labels:</strong> {issue.Labels}
+            </p>
+            <p className="mt-2">
+              <strong>Description:</strong> {issue.Description}
+            </p>
+            <p className="mt-2">
+              <strong>Comments:</strong> {issue.Comments}
+            </p>
+            <p className="mt-2">
+              <strong>Attachments:</strong> {issue.Attachments}
+            </p>
+            <p className="mt-2">
+              <strong>Created Date:</strong> {issue["Created Date"]} |{" "}
+              <strong>Updated Date:</strong> {issue["Updated Date"]} |{" "}
+              <strong>Due Date:</strong> {issue["Due Date"]}
+            </p>
+            <p>
+              <strong>Linked Issues:</strong> {issue["Linked Issues"]}
+            </p>
+            <p>
+              <strong>Sprint:</strong> {issue.Sprint} |{" "}
+              <strong>Story Points:</strong> {issue["Story Points"]} |{" "}
+              <strong>Components:</strong> {issue.Components}
+            </p>
+            <p>
+              <strong>Fix Version(s):</strong> {issue["Fix Version(s)"]} |{" "}
+              <strong>Resolution:</strong> {issue.Resolution} |{" "}
+              <strong>Delay (Days):</strong> {issue["Delay (Days)"]}
+            </p>
           </div>
         ))}
       </div>
