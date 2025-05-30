@@ -73,7 +73,7 @@ const Navbar = () => {
           gap: 1.5,
           color: 'white',
         }}>
-        <img src="/opal-logo.svg" alt="Opal Logo" style={{ height: 40, width: 40 }} />
+        <img src="/Short logo.png" alt="Opal Logo" style={{ height: 50, width: 60 }} />
           <Typography
             variant="h5"
             component={Link}
