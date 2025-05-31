@@ -6,7 +6,7 @@ import classNames from "classnames";
 export default function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: "bot", content: "Hi! How can I help you today?" },
+    { role: "bot", content: "Hi! How can I help you today? Use either the project issue key or project name to get better insights" },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
