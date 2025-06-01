@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { MessageSquare } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
 export default function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,9 +55,17 @@ export default function ChatbotWidget() {
     <div className="fixed bottom-6 right-6 z-50 w-80">
       {isOpen && (
         <div className="absolute bottom-14 right-2 bg-white border border-gray-300 rounded-2xl shadow-lg w-80 h-96 flex flex-col overflow-hidden animate-fadeIn">
-          <div className="bg-gray-600 text-white px-4 py-2 font-semibold">
+          <div className="flex justify-between bg-gray-600 text-white px-4 py-2 font-semibold">
             Chatbot
-          </div>
+            <IconButton  onClick={() => setIsOpen(!isOpen)}   size="small" 
+          sx={{
+          position: 'absolute',
+          top: 4,
+          right: 8,
+          }}> <CloseIcon/>
+        </IconButton>
+
+      </div>
           <div className="flex-1 p-4 overflow-y-auto space-y-2 text-sm">
             {messages.map((msg, idx) => (
               <div

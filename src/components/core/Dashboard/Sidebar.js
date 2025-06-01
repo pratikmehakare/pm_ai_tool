@@ -19,11 +19,12 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 const navLinkData = [
   { name: 'Projects', path: '/dashboard/projects', icon: <FolderOpenIcon /> },
+  { name: 'Issues', path: '/dashboard/issues', icon: < BugReportIcon/> },
+  { name: 'Analytics', path: '/dashboard/analytics', icon: <AnalyticsIcon /> },
   { name: 'Profile', path: '/dashboard/profile', icon: <AccountCircleIcon /> },
-   { name: 'Issues', path: '/dashboard/issues', icon: < BugReportIcon/> },
 ];
 
 const Sidebar = () => {
