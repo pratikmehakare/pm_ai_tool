@@ -7,6 +7,8 @@ import ProjectDetail from "./components/core/Dashboard/Project/ProjectDetail";
 import Profile from "./components/core/Dashboard/Profile/Profile";
 import Issues from "./components/core/Dashboard/Issues/Issues";
 import IssueTableDetail from './components/core/Dashboard/Project/issue-table';
+import AnalyticsPage from './components/core/Dashboard/analytics/analytics';
+
 const App = () => {
   return (
     <div>
@@ -24,6 +26,7 @@ const App = () => {
           <Route path="profile" element={<Profile/>} />
           <Route path="project/:id" element={<ProjectDetail />} />
           <Route path="/dashboard/projects/:id/issues-table" element={<IssueTableDetail />} />
+          <Route path="analytics" element={<AnalyticsPage/>} />
       </Route>
       </Routes>
     </div>
