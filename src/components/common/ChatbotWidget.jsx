@@ -4,6 +4,10 @@ import ReactMarkdown from "react-markdown";
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 
+const classNames = (...classes) => {
+  return classes.filter(Boolean).join(' ');
+};
+
 export default function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
