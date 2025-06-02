@@ -116,7 +116,7 @@ export default function ChatbotWidget() {
               onKeyDown={handleKeyDown}
             />
             <button
-              className="bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-2 rounded-md text-sm shadow-md hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+              className="bg-gradient-to-r from-blue-500 to-blue-500 text-white px-4 py-2 rounded-md text-sm shadow-md hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
               onClick={sendMessage}
               disabled={loading}
             >
@@ -127,7 +127,7 @@ export default function ChatbotWidget() {
       )}
 
       <button
-        className="absolute bottom-0 right-0 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-pink-500 hover:to-blue-500 text-white p-3 rounded-full shadow-xl transition-all duration-300"
+        className="absolute bottom-0 right-0 bg-gradient-to-r from-blue-500 to-blue-500 hover:from-blue-500 hover:to-blue-700 text-white p-3 rounded-full shadow-xl transition-all duration-300"
         onClick={() => setIsOpen(!isOpen)}
       >
         <MessageSquare className="w-5 h-5" />
