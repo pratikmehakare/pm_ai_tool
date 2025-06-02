@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { MessageSquare } from "lucide-react";
 import ReactMarkdown from "react-markdown";
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
-
-const classNames = (...classes) => {
-  return classes.filter(Boolean).join(' ');
-};
+import classNames from "classnames"; 
 
 export default function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,19 +69,12 @@ export default function ChatbotWidget() {
   return (
     <div className="fixed bottom-6 right-6 z-50 w-80 font-sans">
       {isOpen && (
-        <div className="absolute bottom-14 right-2 bg-white border border-gray-300 rounded-2xl shadow-lg w-80 h-96 flex flex-col overflow-hidden animate-fadeIn">
-          <div className="flex justify-between bg-gray-600 text-white px-4 py-2 font-semibold">
-            Chatbot
-            <IconButton  onClick={() => setIsOpen(!isOpen)}   size="small" 
-          sx={{
-          position: 'absolute',
-          top: 4,
-          right: 8,
-          }}> <CloseIcon/>
-        </IconButton>
+        <div className="absolute bottom-14 right-2 bg-gradient-to-br from-white via-blue-50 to-pink-50 border border-gray-300 rounded-2xl shadow-2xl w-80 h-96 flex flex-col overflow-hidden animate-fadeIn transition-all duration-300">
+          <div className="bg-gradient-to-r from-blue-600 to-pink-500 text-white px-4 py-2 font-bold text-sm tracking-wide shadow-inner">
+            🤖 AI Assistant
+          </div>
 
-      </div>
-          <div className="flex-1 p-4 overflow-y-auto space-y-2 text-sm">
+          <div className="flex-1 p-4 overflow-y-auto space-y-3 text-sm scrollbar-thin scrollbar-thumb-blue-200">
             {messages.map((msg, idx) => (
               <div
                 key={idx}
@@ -116,7 +104,7 @@ export default function ChatbotWidget() {
               onKeyDown={handleKeyDown}
             />
             <button
-              className="bg-gradient-to-r from-blue-500 to-blue-500 text-white px-4 py-2 rounded-md text-sm shadow-md hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+              className="bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-2 rounded-md text-sm shadow-md hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
               onClick={sendMessage}
               disabled={loading}
             >
@@ -127,7 +115,7 @@ export default function ChatbotWidget() {
       )}
 
       <button
-        className="absolute bottom-0 right-0 bg-gradient-to-r from-blue-500 to-blue-500 hover:from-blue-500 hover:to-blue-700 text-white p-3 rounded-full shadow-xl transition-all duration-300"
+        className="absolute bottom-0 right-0 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-pink-500 hover:to-blue-500 text-white p-3 rounded-full shadow-xl transition-all duration-300"
         onClick={() => setIsOpen(!isOpen)}
       >
         <MessageSquare className="w-5 h-5" />
