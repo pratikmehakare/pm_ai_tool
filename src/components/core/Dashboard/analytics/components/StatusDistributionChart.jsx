@@ -21,7 +21,7 @@ export const StatusDistributionChart = ({ data }) => {
       <Typography variant="h6" gutterBottom sx={{display: 'flex', alignItems: 'center'}}>
         <ListAltIcon sx={{mr:1, color: 'primary.main'}} />Issue Status Distribution
       </Typography>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={400} height={400}>
         <PieChart>
           <Pie
             data={data}

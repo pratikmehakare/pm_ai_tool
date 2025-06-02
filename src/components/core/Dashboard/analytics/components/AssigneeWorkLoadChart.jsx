@@ -25,7 +25,7 @@ export const AssigneeWorkLoadChart = ({ data, topN = 10 }) => {
       <Typography variant="h6" gutterBottom sx={{display: 'flex', alignItems: 'center'}}>
         <PersonIcon sx={{mr:1, color: 'success.dark'}} />Workload by Assignee (Top {topN})
       </Typography>
-      <ResponsiveContainer width="100%" height={400}>
+      <ResponsiveContainer width={400} height={400}>
         <BarChart data={chartData} margin={{ top: 5, right: 20, left: 20, bottom: 70 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" angle={-45} textAnchor="end" interval={0} tick={{fontSize: 10}} />

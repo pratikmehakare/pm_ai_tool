@@ -22,7 +22,7 @@ export const PriorityIssuesChart = ({ data }) => {
       <Typography variant="h6" gutterBottom sx={{display: 'flex', alignItems: 'center'}}>
         <PriorityHighIcon sx={{mr:1, color: 'error.main'}} />Issues by Priority
       </Typography>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width={400} height={400}>
         <BarChart data={data} layout="vertical" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" />

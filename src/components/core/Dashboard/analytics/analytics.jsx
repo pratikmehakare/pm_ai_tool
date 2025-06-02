@@ -81,19 +81,19 @@ const AnalyticsPage = () => {
 
       {/* Charts Section */}
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6} lg={6}> {/* Changed lg to 6 */}
+        <Grid item xs={12} md={12} lg={6}> 
           <StatusDistributionChart data={statusPieData} />
         </Grid>
-        <Grid item xs={12} md={6} lg={6}> {/* lg is already 6 */}
+        <Grid item xs={12} md={12} lg={12}> 
           <PriorityIssuesChart data={priorityData} />
         </Grid>
-        <Grid item xs={12} md={6} lg={6}> {/* lg is already 6 */}
+        <Grid item xs={12} md={12} lg={12}> 
           <TypeIssuesChart data={typeData} />
         </Grid>
-        <Grid item xs={12} md={6} lg={6}> {/* Added lg={6} for consistency */}
+        <Grid item xs={12} md={6} lg={6}> 
           <AssigneeWorkLoadChart data={assigneeData} topN={10}/>
         </Grid>
-        <Grid item xs={12} md={6} lg={6}> {/* Added lg={6} for consistency */}
+        <Grid item xs={12} md={6} lg={12}> 
           <IssueTrendChart data={createdResolvedTrendData} />
         </Grid>
         {/* If you have an odd number of charts, the last one will take lg={6} or you can make it lg={12} */}
