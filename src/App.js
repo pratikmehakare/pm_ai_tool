@@ -11,7 +11,7 @@ import AnalyticsPage from './components/core/Dashboard/analytics/analytics';
 
 const App = () => {
   return (
-    <div>
+    <div className="bg-richblack-900 font-inter">
       <Navbar />
       <Routes>
         {/* Redirect root to /dashboard */}

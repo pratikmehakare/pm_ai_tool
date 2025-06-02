@@ -40,45 +40,63 @@ const Sidebar = () => {
     return location.pathname === path;
   };
 
-  const renderNavLinks = () => (
-    <List>
-      {navLinkData.map(({ name, path, icon }) => (
-        <ListItem key={path} disablePadding>
-          <ListItemButton
-            component={NavLink}
-            to={path}
-            onClick={() => setIsOpen(false)}
-            selected={getIsActive(path)}
-            sx={{
-              borderRadius: 1,
-              mx: 1,
-              '&.Mui-selected': {
-                backgroundColor: theme.palette.primary.main,
-                color: theme.palette.primary.contrastText,
-                '&:hover': {
-                  backgroundColor: theme.palette.primary.dark,
-                },
-              },
-              '&:hover': {
-                backgroundColor: theme.palette.action.hover,
-              },
+const renderNavLinks = () => (
+  <List>
+    {navLinkData.map(({ name, path, icon }) => (
+      <ListItem key={path} disablePadding>
+        <ListItemButton
+          component={NavLink}
+          to={path}
+          onClick={() => setIsOpen(false)}
+          selected={getIsActive(path)}
+          sx={{
+            borderRadius: 2,
+            mx: 0.5,              // less horizontal margin outside button
+            px: 2,                // reduce horizontal padding inside button (default is more)
+            py: 0.8,              // reduce vertical padding inside button
+            fontWeight: 'bold',
+            fontFamily: "'Poppins', sans-serif",
+            textTransform: 'capitalize',
+            color: getIsActive(path) ? 'white' : 'inherit',
+            width: 'fit-content', // shrink width to content + padding
+            background: getIsActive(path)
+              ? 'linear-gradient(90deg, #3b82f6 0%, #ec4899 100%)' // blue to pink gradient
+              : 'transparent',
+            boxShadow: getIsActive(path)
+              ? '0 3px 6px rgba(236, 72, 153, 0.4)' // smaller shadow
+              : 'none',
+            transition: 'all 0.3s ease',
+            '&:hover': {
+              background: 'linear-gradient(90deg, #60a5fa 0%, #f472b6 100%)', // lighter blue-pink gradient on hover
+              color: 'white',
+              fontWeight: '700',
+              boxShadow: '0 3px 8px rgba(236, 72, 153, 0.5)', // smaller shadow on hover
+            },
+            '& .MuiListItemIcon-root': {
+              color: getIsActive(path) ? 'white' : '#9ca3af',
+              minWidth: 40,
+              marginRight: 1,
+              marginBottom:2
+
+            },
+          }}
+        >
+          <ListItemIcon>{icon}</ListItemIcon>
+          <ListItemText
+            primary={name}
+            primaryTypographyProps={{
+              fontWeight: getIsActive(path) ? '900' : 'bold',
+              fontFamily: "'Poppins', sans-serif",
             }}
-          >
-            <ListItemIcon
-              sx={{
-                color: getIsActive(path)
-                  ? theme.palette.primary.contrastText
-                  : theme.palette.text.secondary,
-              }}
-            >
-              {icon}
-            </ListItemIcon>
-            <ListItemText primary={name} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
-  );
+          />
+        </ListItemButton>
+      </ListItem>
+    ))}
+  </List>
+);
+
+
+
 
   return (
     <>
@@ -106,32 +124,15 @@ const Sidebar = () => {
         <Box
           sx={{
             width: 240,
-            bgcolor: 'background.paper',
+            bgcolor: '#D4D4D4',
             borderRight: 1,
             borderColor: 'divider',
             minHeight: '100vh',
             p: 2,
             flexShrink: 0,
-            pt: 10,
             boxSizing: 'border-box',
           }}
         >
-          <Typography
-            variant="h6"
-            sx={{
-              mb: 2,
-              px: 2,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1,
-              color: 'text.primary',
-              fontWeight: 'medium',
-            }}
-          >
-            <DashboardIcon fontSize="medium" color="primary" />
-            WorkSpace
-          </Typography>
-          <Divider sx={{ mb: 2 }} /> 
           {renderNavLinks()}
         </Box>
       )}
